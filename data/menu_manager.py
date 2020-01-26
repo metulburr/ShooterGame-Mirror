@@ -1,5 +1,6 @@
 from . import tools
 import pygame as pg
+from . import prepare
 
 class MenuManager:
     def __init__(self):
@@ -11,6 +12,31 @@ class MenuManager:
         self.button_sound.sound.set_volume(self.button_volume)
         self.button_hover = tools.Sound('button_hover.wav')
         self.button_hover.sound.set_volume(self.button_hover_volume)
+        
+    def draw_menu(self):
+        for i,opt in enumerate(self.rendered["des"]):
+            opt[1].center = (prepare.SCREEN_RECT.centerx, self.from_bottom+i*self.spacer)
+            if i == self.selected_index:
+                rend_img,rend_rect = self.rendered["sel"][i]
+                rend_rect.center = opt[1].center
+                prepare.SCREEN.blit(rend_img,rend_rect)
+            else:
+                prepare.SCREEN.blit(opt[0],opt[1])
+        
+    def update_menu(self):
+        self.mouse_hover_sound()
+        self.change_selected_option()
+        
+    def get_event_menu(self, event):
+        if event.type == pg.KEYDOWN:
+            if event.key in [pg.K_UP, pg.K_w]:
+                self.change_selected_option(-1)
+            elif event.key in [pg.K_DOWN, pg.K_s]:
+                self.change_selected_option(1)
+                
+            elif event.key == pg.K_RETURN:
+                self.select_option(self.selected_index)
+        self.mouse_menu_click(event)
         
     def mouse_hover_sound(self):
         '''play sound when selected option changes'''
