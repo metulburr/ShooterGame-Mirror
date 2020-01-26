@@ -1,10 +1,8 @@
 import os
 import pygame as pg
-from . import menu_manager
 
-class States(menu_manager.MenuManager):
+class States:
     def __init__(self):
-        menu_manager.MenuManager.__init__(self)
         self.done = False
         self.next = None
         self.quit = False

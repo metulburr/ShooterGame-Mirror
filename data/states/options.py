@@ -1,9 +1,10 @@
 import pygame as pg
-from .. import tools, label, prepare
+from .. import tools, label, prepare, menu_manager
 
-class Options(tools.States):
+class Options(tools.States, menu_manager.MenuManager):
     def __init__(self):
         tools.States.__init__(self)
+        menu_manager.MenuManager.__init__(self)
         self.next = 'game'
         self.options = ['Audio', 'Graphics', 'Test', 'Back']
         self.next_list = ['options', 'options', 'options', 'menu']
